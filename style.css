@@ -28,6 +28,10 @@
     box-sizing: border-box;
 }
 
+html, body { /* Tetap pertahankan ini untuk menghilangkan scroll horizontal */
+    overflow-x: hidden; /* Mencegah scroll horizontal */
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
@@ -168,9 +172,9 @@ body.dark-mode .section-title::after {
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color var(--transition-speed), transform 0.2s ease, color var(--transition-speed), border-color var(--transition-speed); /* Tambahkan border-color */
-    margin: 10px; /* Jarak antar tombol */
-    white-space: nowrap; /* Mencegah tombol putus baris */
+    transition: background-color var(--transition-speed), transform 0.2s ease, color var(--transition-speed), border-color var(--transition-speed);
+    margin: 10px;
+    white-space: nowrap;
 }
 
 .btn:hover {
@@ -178,12 +182,12 @@ body.dark-mode .section-title::after {
 }
 
 /* Primary Button (default filled button) */
-body.light-mode .btn:not(.btn-secondary):not(.btn-outline-accent) { /* Apply to .btn that are NOT .btn-secondary and NOT .btn-outline-accent */
+body.light-mode .btn:not(.btn-secondary):not(.btn-outline-accent) {
     background-color: var(--light-accent);
     color: #fff;
 }
 body.light-mode .btn:not(.btn-secondary):not(.btn-outline-accent):hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
 }
 
 body.dark-mode .btn:not(.btn-secondary):not(.btn-outline-accent) {
@@ -191,14 +195,14 @@ body.dark-mode .btn:not(.btn-secondary):not(.btn-outline-accent) {
     color: var(--dark-bg);
 }
 body.dark-mode .btn:not(.btn-secondary):not(.btn-outline-accent):hover {
-    background-color: #4fe1bd; /* Lighter teal on hover */
+    background-color: #4fe1bd;
 }
 
-/* ----------- Tombol "Selengkapnya" dengan gaya baru (Outline/Ghost Button) ----------- */
+/* Outline/Ghost Button (for "Selengkapnya") */
 .btn-outline-accent {
     background-color: transparent;
-    border: 1px solid; /* Border akan diatur warnanya per mode */
-    color: var(--light-accent); /* Default light mode text color */
+    border: 1px solid;
+    color: var(--light-accent);
 }
 
 body.light-mode .btn-outline-accent {
@@ -207,8 +211,8 @@ body.light-mode .btn-outline-accent {
 }
 
 body.light-mode .btn-outline-accent:hover {
-    background-color: rgba(var(--light-accent-rgb), 0.1); /* Sedikit transparan saat hover */
-    color: var(--light-accent); /* Pastikan warna teks tetap sama */
+    background-color: rgba(var(--light-accent-rgb), 0.1);
+    color: var(--light-accent);
 }
 
 body.dark-mode .btn-outline-accent {
@@ -217,13 +221,11 @@ body.dark-mode .btn-outline-accent {
 }
 
 body.dark-mode .btn-outline-accent:hover {
-    background-color: rgba(var(--dark-accent-rgb), 0.1); /* Sedikit transparan saat hover */
-    color: var(--dark-accent); /* Pastikan warna teks tetap sama */
+    background-color: rgba(var(--dark-accent-rgb), 0.1);
+    color: var(--dark-accent);
 }
-/* ----------------------------------------------------------------------------------- */
 
-
-/* Secondary Button (Unduh CV) */
+/* Secondary Button (for "Unduh CV") */
 .btn-secondary {
     border: 1px solid;
 }
@@ -235,7 +237,7 @@ body.light-mode .btn-secondary {
 }
 
 body.light-mode .btn-secondary:hover {
-    background-color: #5a6268; /* Darker gray on hover */
+    background-color: #5a6268;
     border-color: #5a6268;
 }
 
@@ -246,12 +248,12 @@ body.dark-mode .btn-secondary {
 }
 
 body.dark-mode .btn-secondary:hover {
-    background-color: #3e4449; /* Darker gray for dark mode on hover */
+    background-color: #3e4449;
     border-color: #3e4449;
 }
 
 .btn-secondary i {
-    margin-right: 8px; /* Jarak antara ikon dan teks */
+    margin-right: 8px;
 }
 
 
@@ -289,8 +291,7 @@ body.dark-mode .nav-logo {
 .nav-menu {
     display: flex;
     list-style: none;
-    /* Perbaikan untuk tema toggle di desktop */
-    align-items: center; /* Pastikan item di tengah secara vertikal */
+    align-items: center;
 }
 
 .nav-item {
@@ -333,7 +334,7 @@ body.dark-mode .nav-link::after {
 }
 
 .hamburger {
-    display: none;
+    display: none; /* Default to hidden for desktop */
     cursor: pointer;
     flex-direction: column;
     justify-content: space-between;
@@ -367,7 +368,6 @@ body.dark-mode .hamburger .bar {
 
 /* Theme Toggle Button */
 .theme-toggle {
-    /* margin-left: 20px; DIHAPUS, akan diatur oleh .nav-item */
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
@@ -703,22 +703,30 @@ body.dark-mode .footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
-        padding: 15px;
+        /* Kembali ke flex row di mobile untuk logo dan hamburger */
+        flex-direction: row;
+        height: var(--navbar-height); /* Kembali ke tinggi navbar standar */
+        padding: 15px 20px;
+        align-items: center; /* Pusatkan secara vertikal */
+    }
+
+    .nav-logo {
+        margin-bottom: 0; /* Hapus margin bawah di logo */
     }
 
     .nav-menu {
+        /* Mengembalikan menu ke kondisi tersembunyi */
         position: fixed;
-        right: -100%;
+        right: -100%; /* Sembunyikan di luar layar */
         top: var(--navbar-height);
         flex-direction: column;
-        background-color: var(--light-bg);
+        background-color: var(--light-bg); /* Beri latar belakang untuk overlay */
         width: 100%;
         text-align: center;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out; /* Aktifkan kembali transisi */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Beri bayangan */
         padding: 20px 0;
-        /* Tambahkan ini untuk memusatkan item menu saat mobile */
-        align-items: center;
+        align-items: center; /* Memusatkan item menu saat mobile */
     }
 
     body.dark-mode .nav-menu {
@@ -726,24 +734,28 @@ body.dark-mode .footer {
     }
 
     .nav-menu.active {
-        right: 0;
+        right: 0; /* Tampilkan saat aktif */
     }
 
     .nav-item {
         margin: 20px 0; /* Memberikan jarak vertikal antar item */
+        width: auto; /* Biarkan lebar item menyesuaikan konten */
     }
 
-    /* Memastikan tombol toggle dark mode di tengah saat mobile */
     .nav-menu .nav-item:last-child {
         margin-left: 0; /* Hapus margin kiri bawaan */
         margin-top: 20px; /* Beri jarak dari item menu di atasnya */
-        width: 100%; /* Agar bisa di-text-align center */
+        width: 100%;
         display: flex; /* Gunakan flexbox untuk memusatkan item di dalamnya */
         justify-content: center; /* Pusatkan secara horizontal */
     }
 
+    .nav-link {
+        display: inline-block; /* Kembali ke inline-block */
+    }
+
     .hamburger {
-        display: flex;
+        display: flex; /* Tampilkan kembali hamburger menu */
     }
 
     .hero-content h1 {
@@ -775,7 +787,7 @@ body.dark-mode .footer {
     .hero-buttons {
         flex-direction: column;
         gap: 10px;
-        align-items: center; /* PENTING: Memusatkan tombol saat bertumpuk */
+        align-items: center;
     }
 
     .btn {
