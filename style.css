@@ -878,7 +878,7 @@ body.dark-mode .footer {
 
     .btn {
         width: 80%;
-        margin: 5px auto;
+        margin: px auto;
     }
 }
 
@@ -1024,3 +1024,5 @@ body.dark-mode .gallery-info p {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
+
+
