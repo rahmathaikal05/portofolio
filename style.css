@@ -38,11 +38,50 @@ body.dark-mode .profile-photo {
     }
 }
 
+/* --- Floating Dark Mode Toggle Button --- */
+.dark-mode-toggle {
+    position: fixed; /* Membuat tombol mengambang */
+    bottom: 20px; /* Jarak dari bawah */
+    right: 20px; /* Jarak dari kanan */
+    background-color: #333; /* Warna latar belakang tombol default (akan disesuaikan oleh JS) */
+    color: #fff; /* Warna ikon/teks tombol default (akan disesuaikan oleh JS) */
+    border: none; /* Hilangkan border */
+    border-radius: 50%; /* Membuat tombol menjadi bulat */
+    width: 50px; /* Lebar tombol */
+    height: 50px; /* Tinggi tombol */
+    font-size: 24px; /* Ukuran ikon/teks */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+    z-index: 1000; /* Pastikan tombol di atas elemen lain */
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
 
+/* Gaya khusus untuk tombol floating di light mode */
+body.light-mode .dark-mode-toggle {
+    background-color: var(--light-accent); /* Warna accent light mode */
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(var(--light-accent-rgb), 0.3);
+}
 
+body.light-mode .dark-mode-toggle:hover {
+    background-color: #0056b3; /* Darker accent on hover */
+    transform: scale(1.1);
+}
 
+/* Gaya khusus untuk tombol floating di dark mode */
+body.dark-mode .dark-mode-toggle {
+    background-color: var(--dark-accent); /* Warna accent dark mode */
+    color: var(--dark-bg); /* Warna teks sesuai background dark mode */
+    box-shadow: 0 2px 10px rgba(var(--dark-accent-rgb), 0.3);
+}
 
-
+body.dark-mode .dark-mode-toggle:hover {
+    background-color: #4fe1bd; /* Slightly lighter accent on hover */
+    transform: scale(1.1);
+}
 
 
 /* General Styling */
@@ -118,6 +157,15 @@ body.light-mode .alt-background {
 body.light-mode .timeline-item,
 body.light-mode .education-item {
     border-color: var(--light-border);
+}
+
+/* Theme Toggle Button (dihapus dari navbar, tapi ini adalah definisi umum) */
+.theme-toggle {
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 body.light-mode .theme-toggle {
@@ -411,15 +459,6 @@ body.dark-mode .hamburger .bar {
 
 .hamburger.active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
-}
-
-/* Theme Toggle Button */
-.theme-toggle {
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 /* Hero Section */
@@ -789,13 +828,13 @@ body.dark-mode .footer {
         width: auto; /* Biarkan lebar item menyesuaikan konten */
     }
 
+    /* Hapus tema toggle dari navbar di mobile juga */
     .nav-menu .nav-item:last-child {
         margin-left: 0; /* Hapus margin kiri bawaan */
-        margin-top: 20px; /* Beri jarak dari item menu di atasnya */
-        width: 100%;
-        display: flex; /* Gunakan flexbox untuk memusatkan item di dalamnya */
-        justify-content: center; /* Pusatkan secara horizontal */
+        margin-top: 0; /* Hapus margin atas jika ini adalah tombol floating */
+        display: none; /* Sembunyikan tombol tema di navbar untuk mobile */
     }
+
 
     .nav-link {
         display: inline-block; /* Kembali ke inline-block */
@@ -850,5 +889,138 @@ body.dark-mode .footer {
 
     .hero-content p {
         font-size: 1em;
+    }
+}
+
+
+
+/* --- Custom CSS untuk Galeri Foto --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center; /* Pusatkan grid di dalam container */
+}
+
+.gallery-item {
+    background-color: var(--light-secondary-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color var(--transition-speed);
+    cursor: pointer;
+    text-align: left; /* Teks di dalam item galeri rata kiri */
+}
+
+body.dark-mode .gallery-item {
+    background-color: var(--dark-secondary-bg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px; /* Tinggi foto yang seragam */
+    object-fit: cover; /* Memastikan foto mengisi area tanpa terdistorsi */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05); /* Efek zoom saat hover */
+}
+
+.gallery-info {
+    padding: 20px;
+}
+
+.gallery-info h4 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: var(--light-accent);
+    transition: color var(--transition-speed);
+}
+
+body.dark-mode .gallery-info h4 {
+    color: var(--dark-accent);
+}
+
+.gallery-info p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: var(--light-text);
+    transition: color var(--transition-speed);
+}
+
+body.dark-mode .gallery-info p {
+    color: var(--dark-text);
+}
+
+/* Modal untuk tampilan foto penuh */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1001; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    align-items: center; /* Untuk memposisikan gambar di tengah */
+    justify-content: center; /* Untuk memposisikan gambar di tengah */
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 85%;
+    object-fit: contain; /* Ensure the image fits within the modal */
+}
+
+.modal-caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px; /* Cukup ruang untuk teks */
+    font-size: 1.2em;
+}
+
+/* Close button */
+.close {
+    position: absolute;
+    top: 25px;
+    right: 45px;
+    color: #fff;
+    font-size: 35px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Tambahkan ke bagian @media (max-width: 768px) */
+@media (max-width: 768px) {
+    /* Responsive untuk galeri */
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
