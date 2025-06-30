@@ -1,3 +1,50 @@
+/* Styling untuk Foto Profil */
+.profile-photo {
+    width: 180px; /* Atur lebar foto */
+    height: 180px; /* Atur tinggi foto */
+    border-radius: 50%; /* Membuat foto menjadi bulat */
+    object-fit: cover; /* Memastikan gambar mengisi area tanpa terdistorsi */
+    margin-bottom: 30px; /* Jarak antara foto dan teks di bawahnya */
+    border: 4px solid var(--light-accent); /* Border default untuk light mode */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+body.dark-mode .profile-photo {
+    border-color: var(--dark-accent); /* Border untuk dark mode */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Tambahkan sedikit efek hover (opsional) */
+.profile-photo:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+/* Sesuaikan ukuran foto di perangkat mobile */
+@media (max-width: 768px) {
+    .profile-photo {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 15px;
+    }
+}
+
+
+
+
+
+
+
+
 /* General Styling */
 :root {
     --light-bg: #f8f8f8;
