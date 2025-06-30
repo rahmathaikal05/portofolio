@@ -1,0 +1,798 @@
+/* General Styling */
+:root {
+    --light-bg: #f8f8f8;
+    --light-text: #333;
+    --light-accent: #007bff;
+    --light-secondary-bg: #ececec;
+    --light-border: #ddd;
+    --light-btn-secondary-bg: #000000; /* Warna abu-abu untuk tombol sekunder */
+    --light-btn-secondary-text: #fff;
+
+    --dark-bg: #1a1a2e;
+    --dark-text: #e0e0e0;
+    --dark-accent: #64ffda; /* Teal color for dark mode */
+    --dark-secondary-bg: #2d2d4e;
+    --dark-border: #444;
+    --dark-btn-secondary-bg: #000000; /* Warna abu-abu gelap untuk dark mode */
+    --dark-btn-secondary-text: #e0e0e0;
+
+
+    --navbar-height: 70px;
+    --transition-speed: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Light Mode */
+body.light-mode {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+body.light-mode .header,
+body.light-mode .navbar {
+    background-color: var(--light-bg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .nav-link {
+    color: var(--light-text);
+}
+
+body.light-mode .nav-link:hover,
+body.light-mode .nav-link.active {
+    color: var(--light-accent);
+}
+
+body.light-mode .alt-background {
+    background-color: var(--light-secondary-bg);
+}
+
+body.light-mode .timeline-item,
+body.light-mode .education-item {
+    border-color: var(--light-border);
+}
+
+body.light-mode .theme-toggle {
+    color: var(--light-text);
+    background: none;
+    border: 1px solid var(--light-text);
+}
+body.light-mode .theme-toggle:hover {
+    background-color: var(--light-secondary-bg);
+}
+
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+body.dark-mode .header,
+body.dark-mode .navbar {
+    background-color: var(--dark-bg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .navbar.scrolled {
+    background-color: rgba(26, 26, 46, 0.95); /* Slightly darker for scrolled effect */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .nav-link {
+    color: var(--dark-text);
+}
+
+body.dark-mode .nav-link:hover,
+body.dark-mode .nav-link.active {
+    color: var(--dark-accent);
+}
+
+body.dark-mode .alt-background {
+    background-color: var(--dark-secondary-bg);
+}
+
+body.dark-mode .timeline-item,
+body.dark-mode .education-item {
+    border-color: var(--dark-border);
+}
+
+body.dark-mode .theme-toggle {
+    color: var(--dark-text);
+    background: none;
+    border: 1px solid var(--dark-text);
+}
+
+body.dark-mode .theme-toggle:hover {
+    background-color: var(--dark-secondary-bg);
+}
+
+
+/* Utility Classes */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5em;
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--light-accent); /* Default, will be overridden by dark mode */
+    transition: background-color var(--transition-speed);
+}
+
+body.dark-mode .section-title::after {
+    background-color: var(--dark-accent);
+}
+
+/* Button Styling */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color var(--transition-speed), transform 0.2s ease, color var(--transition-speed);
+    margin: 10px; /* Jarak antar tombol */
+    white-space: nowrap; /* Mencegah tombol putus baris */
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+/* Primary Button (Sudah ada di .btn) */
+body.light-mode .btn:not(.btn-secondary) { /* Apply to .btn that are NOT .btn-secondary */
+    background-color: var(--light-accent);
+    color: #fff;
+}
+body.light-mode .btn:not(.btn-secondary):hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+body.dark-mode .btn:not(.btn-secondary) {
+    background-color: var(--dark-accent);
+    color: var(--dark-bg);
+}
+body.dark-mode .btn:not(.btn-secondary):hover {
+    background-color: #4fe1bd; /* Lighter teal on hover */
+}
+
+/* Secondary Button (Unduh CV) */
+.btn-secondary {
+    border: 1px solid;
+}
+
+body.light-mode .btn-secondary {
+    background-color: var(--light-btn-secondary-bg);
+    color: var(--light-btn-secondary-text);
+    border-color: var(--light-btn-secondary-bg);
+}
+
+body.light-mode .btn-secondary:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+    border-color: #5a6268;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: var(--dark-btn-secondary-bg);
+    color: var(--dark-btn-secondary-text);
+    border-color: var(--dark-btn-secondary-bg);
+}
+
+body.dark-mode .btn-secondary:hover {
+    background-color: #3e4449; /* Darker gray for dark mode on hover */
+    border-color: #3e4449;
+}
+
+.btn-secondary i {
+    margin-right: 8px; /* Jarak antara ikon dan teks */
+}
+
+
+/* Header & Navbar (tetap sama) */
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    height: var(--navbar-height);
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.nav-logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--light-text); /* Default, overridden by dark mode */
+    transition: color var(--transition-speed);
+}
+
+body.dark-mode .nav-logo {
+    color: var(--dark-text);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    margin-left: 30px;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1em;
+    padding: 5px 0;
+    position: relative;
+    transition: color var(--transition-speed);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--light-accent); /* Default, overridden by dark mode */
+    bottom: -5px;
+    left: 0;
+    transition: width var(--transition-speed);
+}
+
+body.dark-mode .nav-link::after {
+    background-color: var(--dark-accent);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+}
+
+.hamburger .bar {
+    height: 3px;
+    width: 100%;
+    background-color: var(--light-text); /* Default, overridden by dark mode */
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+body.dark-mode .hamburger .bar {
+    background-color: var(--dark-text);
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Theme Toggle Button (tetap sama) */
+.theme-toggle {
+    margin-left: 20px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: var(--navbar-height); /* Offset for fixed navbar */
+}
+
+.hero-content {
+    z-index: 1;
+    display: flex; /* Menggunakan flexbox untuk menata elemen di hero */
+    flex-direction: column; /* Elemen akan di bawah satu sama lain */
+    align-items: center; /* Pusatkan item secara horizontal */
+}
+
+.hero-content h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex; /* Gunakan flexbox untuk menata tombol secara horizontal */
+    gap: 20px; /* Jarak antar tombol */
+    margin-top: 30px; /* Jarak dari paragraf di atasnya */
+    flex-wrap: wrap; /* Pastikan tombol membungkus ke baris baru pada layar kecil */
+    justify-content: center; /* Pusatkan tombol jika ada lebih dari satu baris */
+}
+
+
+
+/* About Section */
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    /* text-align: left; <-- Hapus atau ganti ini */
+    text-align: justify; /* <-- Tambahkan properti ini */
+}
+
+
+.about-content p {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    /* Jika kamu sebelumnya punya text-align di sini, hapus juga */
+}
+
+.about-content p {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+/* Experience (Timeline) Section (tetap sama) */
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: var(--light-accent); /* Default, overridden by dark mode */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+    transition: background-color var(--transition-speed);
+}
+
+body.dark-mode .timeline::before {
+    background-color: var(--dark-accent);
+}
+
+.timeline-item {
+    padding: 20px 40px;
+    position: relative;
+    background-color: var(--light-bg); /* Default, overridden by dark mode */
+    border: 1px solid var(--light-border); /* Default, overridden by dark mode */
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+body.dark-mode .timeline-item {
+    background-color: var(--dark-secondary-bg);
+    border-color: var(--dark-border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: var(--light-accent); /* Default, overridden by dark mode */
+    border-radius: 50%;
+    top: 25px;
+    z-index: 1;
+    transition: background-color var(--transition-speed);
+}
+
+body.dark-mode .timeline-item::after {
+    background-color: var(--dark-accent);
+}
+
+.timeline-item:nth-child(odd) {
+    left: 0;
+    text-align: right;
+    transform: translateX(-50%); /* For visual balance on the left */
+}
+
+.timeline-item:nth-child(even) {
+    left: 50%;
+    text-align: left;
+    transform: translateX(0);
+}
+
+.timeline-item:nth-child(odd)::after {
+    right: -7.5px;
+}
+
+.timeline-item:nth-child(even)::after {
+    left: -7.5px;
+}
+
+.timeline-item h3 {
+    margin-bottom: 5px;
+    color: var(--light-accent); /* Default, overridden by dark mode */
+    transition: color var(--transition-speed);
+}
+
+body.dark-mode .timeline-item h3 {
+    color: var(--dark-accent);
+}
+
+.timeline-item .date {
+    font-style: italic;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.timeline-item ul {
+    list-style: none;
+    padding: 0;
+}
+
+.timeline-item li {
+    margin-bottom: 5px;
+}
+
+/* Education Section (tetap sama) */
+.education-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.education-item {
+    background-color: var(--light-bg); /* Default, overridden by dark mode */
+    border: 1px solid var(--light-border); /* Default, overridden by dark mode */
+    border-radius: 8px;
+    padding: 30px;
+    flex: 1 1 calc(50% - 60px); /* Two items per row, with gap */
+    max-width: 500px;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+body.dark-mode .education-item {
+    background-color: var(--dark-secondary-bg);
+    border-color: var(--dark-border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.education-item h3 {
+    margin-bottom: 10px;
+    color: var(--light-accent); /* Default, overridden by dark mode */
+    transition: color var(--transition-speed);
+}
+
+body.dark-mode .education-item h3 {
+    color: var(--dark-accent);
+}
+
+.education-item p {
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.education-item ul {
+    list-style: inside disc;
+    padding-left: 20px;
+}
+
+/* Contact Section */
+.contact-intro {
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+.contact-info { /* Pastikan ini menata secara vertikal */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Pusatkan secara horizontal */
+    margin-bottom: 30px; /* Jarak ke signature */
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.contact-info a {
+    color: var(--light-accent); /* Default, overridden by dark mode */
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+body.dark-mode .contact-info a {
+    color: var(--dark-accent);
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+.contact-info i {
+    margin-right: 10px;
+    color: var(--light-accent); /* Default, overridden by dark mode */
+    transition: color var(--transition-speed);
+}
+
+body.dark-mode .contact-info i {
+    color: var(--dark-accent);
+}
+
+.signature {
+    margin-top: 40px; /* Di luar contact-info, jadi margin-top lebih besar */
+    font-style: italic;
+    font-size: 1.1em;
+}
+
+/* Footer (tetap sama) */
+.footer {
+    padding: 20px 0;
+    text-align: center;
+    background-color: var(--light-secondary-bg); /* Default, overridden by dark mode */
+    color: var(--light-text); /* Default, overridden by dark mode */
+    border-top: 1px solid var(--light-border); /* Default, overridden by dark mode */
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+}
+
+body.dark-mode .footer {
+    background-color: var(--dark-secondary-bg);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+
+/* Animations */
+/* (Semua kode animasi tetap sama seperti sebelumnya) */
+@keyframes fadeInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-in-up {
+    opacity: 0;
+    animation: fadeInFromBottom 1s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.animate-fade-in-up.delay-1 { animation-delay: 0.2s; }
+.animate-fade-in-up.delay-2 { animation-delay: 0.4s; }
+
+.animate-slide-in-right {
+    opacity: 0;
+    animation: slideInRight 1s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.animate-slide-in-left {
+    opacity: 0;
+    animation: slideInLeft 1s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Initially hidden elements for scroll-based animation */
+.section-title,
+.about-content p,
+.timeline-item,
+.education-item,
+.contact-intro,
+.contact-info,
+.signature {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.section-title.fade-in,
+.about-content p.fade-in,
+.timeline-item.fade-in,
+.education-item.fade-in,
+.contact-intro.fade-in,
+.contact-info.fade-in,
+.signature.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px;
+    }
+
+    .nav-menu {
+        position: fixed;
+        right: -100%;
+        top: var(--navbar-height);
+        flex-direction: column;
+        background-color: var(--light-bg); /* Default, overridden by dark mode */
+        width: 100%;
+        text-align: center;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
+    }
+
+    body.dark-mode .nav-menu {
+        background-color: var(--dark-bg);
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+
+    .nav-item {
+        margin: 20px 0;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-content p {
+        font-size: 1.2em;
+    }
+
+    .section-title {
+        font-size: 2em;
+    }
+
+    .timeline::before {
+        left: 18px;
+    }
+
+    .timeline-item {
+        padding: 10px 20px 10px 50px;
+        margin-left: 30px;
+        text-align: left;
+        transform: translateX(0) !important; /* Override explicit transformations for smaller screens */
+    }
+
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+
+    .timeline-item::after {
+        left: 11px;
+    }
+
+    .timeline-item:nth-child(odd)::after,
+    .timeline-item:nth-child(even)::after {
+        right: auto;
+    }
+
+    .education-item {
+        flex: 1 1 100%; /* Single item per row */
+        max-width: 100%;
+    }
+
+    .hero-buttons {
+        flex-direction: column; /* Tumpuk tombol di layar sangat kecil */
+        gap: 10px; /* Kurangi jarak */
+    }
+
+    .btn {
+        width: 80%; /* Tombol bisa lebih lebar */
+        margin: 5px auto; /* Pusatkan tombol individual */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2em;
+    }
+
+    .hero-content p {
+        font-size: 1em;
+    }
+}
