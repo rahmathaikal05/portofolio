@@ -1,249 +1,230 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle'); // Tombol dark mode di navbar utama
+    // --- 1. Ambil Elemen-elemen DOM yang Dibutuhkan ---
     const body = document.body;
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section[id]');
     const navbar = document.querySelector('.navbar');
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
+    const floatingDarkModeToggle = document.getElementById('darkModeToggle'); // Tombol dark mode mengambang
 
-    // --- Fungsi untuk memperbarui tema dan ikon pada KEDUA tombol ---
-    const updateThemeAndIcon = (isDarkMode) => {
-        if (isDarkMode) {
-            body.classList.remove('light-mode');
-            body.classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark-mode');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            body.classList.remove('dark-mode');
-            body.classList.add('light-mode');
-            localStorage.setItem('theme', 'light-mode');
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        }
+    // Elemen Modal Galeri
+    const modal = document.getElementById("myModal");
+    const modalImg = document.getElementById("img01");
+    const captionText = document.getElementById("caption");
+    const galleryItems = document.querySelectorAll(".gallery-item");
+    const closeModalSpan = document.getElementsByClassName("close")[0];
 
-        // Sinkronkan ikon pada tombol di hamburger jika ada
-        const hamburgerThemeToggleButton = document.getElementById('hamburger-theme-toggle');
-        if (hamburgerThemeToggleButton) {
-            const hamburgerIcon = hamburgerThemeToggleButton.querySelector('i');
-            if (hamburgerIcon) {
-                hamburgerIcon.classList.replace(isDarkMode ? 'fa-moon' : 'fa-sun', isDarkMode ? 'fa-sun' : 'fa-moon');
-            }
-            // Update teks 'Dark Mode'/'Light Mode'
-            if (hamburgerThemeToggleButton.lastChild.nodeType === Node.TEXT_NODE) { // Check if it's a text node
-                hamburgerThemeToggleButton.lastChild.nodeValue = isDarkMode ? ' Light Mode' : ' Dark Mode';
+
+    // --- 2. Dark Mode Toggle Fungsionalitas ---
+
+    // Fungsi untuk memperbarui ikon tombol dark mode (khusus tombol mengambang)
+    const syncFloatingDarkModeToggleIcon = () => {
+        if (floatingDarkModeToggle) {
+            if (body.classList.contains('dark-mode')) {
+                floatingDarkModeToggle.innerHTML = '☀️'; // Sun emoji
             } else {
-                // If it's not a text node (e.g., an HTML comment), create one
-                hamburgerThemeToggleButton.appendChild(document.createTextNode(isDarkMode ? ' Light Mode' : ' Dark Mode'));
+                floatingDarkModeToggle.innerHTML = '🌙'; // Moon emoji
             }
         }
     };
 
-    // Inisialisasi status tema dan ikon saat dimuat
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) {
-        updateThemeAndIcon(currentTheme === 'dark-mode');
-    } else {
-        // Set default theme based on system preference
-        updateThemeAndIcon(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
+    // Inisialisasi status tema saat dimuat
+    const initializeTheme = () => {
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            body.className = currentTheme; // Terapkan tema yang tersimpan
+        } else {
+            // Deteksi preferensi sistem jika tidak ada tema tersimpan
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+        }
+        syncFloatingDarkModeToggleIcon(); // Pastikan ikon tombol mengambang sesuai tema
+    };
 
-    // Event listener untuk tombol dark mode di navbar utama
-    if (themeToggle) { // Pastikan tombol ada sebelum menambahkan event listener
-        themeToggle.addEventListener('click', () => {
-            updateThemeAndIcon(!body.classList.contains('dark-mode')); // Toggle current state
+    // Panggil inisialisasi tema saat DOM siap
+    initializeTheme();
+
+    // Event listener untuk tombol dark mode mengambang
+    if (floatingDarkModeToggle) {
+        floatingDarkModeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+            syncFloatingDarkModeToggleIcon(); // Sinkronkan ikon setelah perubahan tema
         });
     }
 
-    // --- Tambahkan tombol dark mode ke dalam hamburger menu ---
-    // Buat elemen <li> untuk tombol dark mode di dalam hamburger
-    const hamburgerThemeToggleLi = document.createElement('li');
-    hamburgerThemeToggleLi.classList.add('nav-item'); // Pastikan memiliki kelas yang sama dengan item nav lainnya
+    // --- 3. Navbar Efek Scroll dan Link Aktif ---
 
-    // Buat tombol itu sendiri
-    const hamburgerThemeButton = document.createElement('button');
-    hamburgerThemeButton.id = 'hamburger-theme-toggle'; // ID unik untuk tombol di hamburger
-    hamburgerThemeButton.classList.add('theme-toggle');
-    hamburgerThemeButton.setAttribute('aria-label', 'Toggle dark mode');
-
-    // Tambahkan ikon dan teks ke tombol hamburger
-    const iconClass = body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon';
-    hamburgerThemeButton.innerHTML = `<i class="${iconClass}"></i> ${body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode'}`;
-
-    hamburgerThemeToggleLi.appendChild(hamburgerThemeButton); // Masukkan tombol ke dalam <li>
-
-    // Cek apakah navMenu sudah berisi item dark mode ini, agar tidak terduplikasi saat re-render
-    // Ini penting jika DOMContentLoaded bisa dipanggil berkali-kali atau jika ada library lain.
-    // Cara yang lebih aman adalah dengan mencari elemen dengan ID unik ini sebelum menambahkannya.
-    if (!document.getElementById('hamburger-theme-toggle')) {
-        navMenu.appendChild(hamburgerThemeToggleLi); // Tambahkan ke dalam nav-menu
-    }
-
-
-    // Event listener untuk tombol dark mode di hamburger menu
-    if (hamburgerThemeButton) { // Pastikan tombol ada sebelum menambahkan event listener
-        hamburgerThemeButton.addEventListener('click', () => {
-            updateThemeAndIcon(!body.classList.contains('dark-mode')); // Toggle current state
-            // Tutup menu mobile setelah mengklik tombol toggle
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
-    }
-
-
-    // --- Navbar fixed and scroll effect ---
-    window.addEventListener('scroll', () => {
+    const handleScrollEffects = () => {
+        // Efek bayangan navbar saat scroll
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
 
-        let current = '';
+        // Tentukan link navigasi yang aktif berdasarkan posisi scroll
+        let currentSectionId = '';
+        const scrollPosition = window.pageYOffset;
+        const navbarHeight = navbar.clientHeight; // Dapatkan tinggi navbar yang sebenarnya
+
         sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (pageYOffset >= sectionTop - navbar.clientHeight) {
-                current = section.getAttribute('id');
+            const sectionTop = section.offsetTop - navbarHeight; // Sesuaikan dengan tinggi navbar
+            const sectionBottom = sectionTop + section.offsetHeight;
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                currentSectionId = section.getAttribute('id');
             }
         });
 
+        // Hapus 'active' dari semua link dan tambahkan ke link yang sesuai
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') && link.getAttribute('href').includes(current)) {
+            if (link.getAttribute('href') && link.getAttribute('href').includes(currentSectionId)) {
                 link.classList.add('active');
             }
         });
-    });
+    };
 
-    // Smooth scroll for navigation links
+    window.addEventListener('scroll', handleScrollEffects);
+    window.addEventListener('resize', handleScrollEffects); // Perbarui saat resize
+    handleScrollEffects(); // Panggil saat pemuatan awal untuk mengatur link aktif
+
+
+    // --- 4. Smooth Scroll untuk Link Navigasi ---
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
+            e.preventDefault(); // Mencegah perilaku default link
+            const targetId = this.getAttribute('href').substring(1); // Ambil ID section
             const targetSection = document.getElementById(targetId);
 
             if (targetSection) {
+                // Hitung offset dengan mempertimbangkan tinggi navbar yang fixed
                 const offsetTop = targetSection.offsetTop - navbar.clientHeight;
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
                 });
 
-                history.pushState(null, '', `#${targetId}`);
+                // Tambahkan hash ke URL setelah scroll selesai (opsional)
+                // history.pushState(null, '', `#${targetId}`);
 
+                // Tutup menu mobile setelah mengklik link
                 if (navMenu.classList.contains('active')) {
                     hamburger.classList.remove('active');
                     navMenu.classList.remove('active');
                 }
 
+                // Perbarui kelas aktif segera setelah klik (untuk feedback visual)
                 navLinks.forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
             }
         });
     });
 
-    // --- Navbar Hamburger (Mobile Menu) ---
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    // Close nav menu when a link is clicked (for mobile)
-    document.querySelectorAll('.nav-link').forEach(n => {
-        if (n.getAttribute('href') && n.getAttribute('href').startsWith('#')) {
-            n.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        }
-    });
-
-    // Set initial active link based on current section on load (and scroll)
-    function setActiveNavLink() {
-        let currentActive = '';
-        const scrollPosition = window.pageYOffset + navbar.offsetHeight + 1;
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                currentActive = section.getAttribute('id');
-            }
+    // --- 5. Hamburger Menu (Mobile Navigation) ---
+    if (hamburger && navMenu) { // Pastikan elemen ada sebelum menambahkan listener
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            // Mencegah scroll body saat menu mobile aktif
+            body.classList.toggle('no-scroll', navMenu.classList.contains('active'));
         });
 
+        // Tutup menu nav saat salah satu link diklik (untuk mobile)
         navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') && link.getAttribute('href').includes(currentActive)) {
-                link.classList.add('active');
-            }
+            link.addEventListener('click', () => {
+                if (navMenu.classList.contains('active')) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    body.classList.remove('no-scroll');
+                }
+            });
         });
     }
 
-    window.addEventListener('scroll', setActiveNavLink);
-    setActiveNavLink(); // Call on initial load
-
-    // --- Scroll Animations (Intersection Observer) ---
-    const faders = document.querySelectorAll('.section-title, .about-content p, .timeline-item, .education-item, .contact-intro, .contact-info, .signature, .gallery-item');
+    // --- 6. Scroll Animations (Intersection Observer) ---
+    const animatedElements = document.querySelectorAll('.section-title, .about-content p, .timeline-item, .education-item, .contact-intro, .contact-info, .signature, .gallery-item');
 
     const appearOptions = {
-        threshold: 0.3,
-        rootMargin: "0px 0px -100px 0px"
+        threshold: 0.3, // Persentase elemen yang terlihat untuk memicu animasi
+        rootMargin: "0px 0px -100px 0px" // Sesuaikan untuk memicu lebih awal/akhir
     };
 
-    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+    const appearOnScrollObserver = new IntersectionObserver(function(entries, observer) {
         entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
-            } else {
-                entry.target.classList.add('fade-in');
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in'); // Memicu transisi CSS opacity/transform
+
+                // Tambahkan kelas animasi spesifik jika ada
                 if (entry.target.classList.contains('animate-slide-in-right')) {
                     entry.target.classList.add('slide-in-right');
                 } else if (entry.target.classList.contains('animate-slide-in-left')) {
                     entry.target.classList.add('slide-in-left');
                 } else if (entry.target.classList.contains('animate-fade-in-up')) {
-                    entry.target.style.opacity = 1;
+                    // Jika menggunakan keyframes, pastikan properti awal diatur di CSS
+                    // dan keyframes akan berjalan otomatis saat kelas ditambahkan.
+                    // Jika 'opacity: 1' diset di JS, itu akan menimpa animasi CSS.
+                    // Sebaiknya biarkan CSS mengatur opacity awal dan akhir.
                 }
-                appearOnScroll.unobserve(entry.target);
+
+                observer.unobserve(entry.target); // Berhenti mengamati setelah animasi dipicu
             }
         });
     }, appearOptions);
 
-    faders.forEach(fader => {
-        appearOnScroll.observe(fader);
+    animatedElements.forEach(el => {
+        appearOnScrollObserver.observe(el);
     });
 
-    // Modal Image Gallery
-    var modal = document.getElementById("myModal");
-    var modalImg = document.getElementById("img01");
-    var captionText = document.getElementById("caption");
-    var galleryItems = document.querySelectorAll(".gallery-item");
+    // --- 7. Modal Image Gallery Fungsionalitas ---
 
+    // Saat item galeri diklik
     galleryItems.forEach(item => {
         item.addEventListener('click', function() {
-            modal.style.display = "flex";
-            modalImg.src = this.getAttribute('data-src');
-            captionText.innerHTML = this.getAttribute('data-caption');
+            modal.style.display = "flex"; // Tampilkan modal sebagai flexbox untuk centering
+            modalImg.src = this.getAttribute('data-src'); // Atur sumber gambar modal
+            captionText.innerHTML = this.getAttribute('data-caption'); // Atur teks keterangan
+            body.classList.add('no-scroll'); // Mencegah scroll body saat modal terbuka
         });
     });
 
-    var span = document.getElementsByClassName("close")[0];
-
-    span.onclick = function() {
-        modal.style.display = "none";
+    // Saat tombol tutup diklik
+    if (closeModalSpan) {
+        closeModalSpan.addEventListener('click', () => {
+            modal.style.display = "none";
+            body.classList.remove('no-scroll'); // Aktifkan kembali scroll body
+        });
     }
 
-    // Close modal when clicking outside the image
+
+    // Saat area di luar gambar modal diklik (untuk menutup modal)
     modal.addEventListener('click', function(event) {
-        if (event.target == modal) {
+        // Pastikan klik terjadi pada latar belakang modal, bukan pada gambar atau caption
+        if (event.target === modal) {
             modal.style.display = "none";
+            body.classList.remove('no-scroll'); // Aktifkan kembali scroll body
         }
     });
 
-    // Close modal with Escape key
+    // Menutup modal dengan tombol Escape
     document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape") {
+        if (event.key === "Escape" && modal.style.display === "flex") {
             modal.style.display = "none";
+            body.classList.remove('no-scroll'); // Aktifkan kembali scroll body
         }
     });
 });

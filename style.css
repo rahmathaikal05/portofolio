@@ -1,90 +1,4 @@
-/* Styling untuk Foto Profil */
-.profile-photo {
-    width: 180px; /* Atur lebar foto */
-    height: 180px; /* Atur tinggi foto */
-    border-radius: 50%; /* Membuat foto menjadi bulat */
-    object-fit: cover; /* Memastikan gambar mengisi area tanpa terdistorsi */
-    margin-bottom: 30px; /* Jarak antara foto dan teks di bawahnya */
-    border: 4px solid var(--light-accent); /* Border default untuk light mode */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
-}
-
-body.dark-mode .profile-photo {
-    border-color: var(--dark-accent); /* Border untuk dark mode */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Tambahkan sedikit efek hover (opsional) */
-.profile-photo:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
-}
-
-/* Sesuaikan ukuran foto di perangkat mobile */
-@media (max-width: 768px) {
-    .profile-photo {
-        width: 150px;
-        height: 150px;
-        margin-bottom: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .profile-photo {
-        width: 120px;
-        height: 120px;
-        margin-bottom: 15px;
-    }
-}
-
-/* --- Floating Dark Mode Toggle Button --- */
-.dark-mode-toggle {
-    position: fixed; /* Membuat tombol mengambang */
-    bottom: 20px; /* Jarak dari bawah */
-    right: 20px; /* Jarak dari kanan */
-    background-color: #333; /* Warna latar belakang tombol default (akan disesuaikan oleh JS) */
-    color: #fff; /* Warna ikon/teks tombol default (akan disesuaikan oleh JS) */
-    border: none; /* Hilangkan border */
-    border-radius: 50%; /* Membuat tombol menjadi bulat */
-    width: 50px; /* Lebar tombol */
-    height: 50px; /* Tinggi tombol */
-    font-size: 24px; /* Ukuran ikon/teks */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Efek bayangan */
-    z-index: 1000; /* Pastikan tombol di atas elemen lain */
-    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
-}
-
-/* Gaya khusus untuk tombol floating di light mode */
-body.light-mode .dark-mode-toggle {
-    background-color: var(--light-accent); /* Warna accent light mode */
-    color: #fff;
-    box-shadow: 0 2px 10px rgba(var(--light-accent-rgb), 0.3);
-}
-
-body.light-mode .dark-mode-toggle:hover {
-    background-color: #0056b3; /* Darker accent on hover */
-    transform: scale(1.1);
-}
-
-/* Gaya khusus untuk tombol floating di dark mode */
-body.dark-mode .dark-mode-toggle {
-    background-color: var(--dark-accent); /* Warna accent dark mode */
-    color: var(--dark-bg); /* Warna teks sesuai background dark mode */
-    box-shadow: 0 2px 10px rgba(var(--dark-accent-rgb), 0.3);
-}
-
-body.dark-mode .dark-mode-toggle:hover {
-    background-color: #4fe1bd; /* Slightly lighter accent on hover */
-    transform: scale(1.1);
-}
-
-
-/* General Styling */
+/* --- Variabel CSS Global (Root) --- */
 :root {
     --light-bg: #f8f8f8;
     --light-text: #333;
@@ -108,13 +22,15 @@ body.dark-mode .dark-mode-toggle:hover {
     --transition-speed: 0.3s ease;
 }
 
+/* --- Pengaturan Ulang Dasar (Reset) --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body { /* Tetap pertahankan ini untuk menghilangkan scroll horizontal */
+/* --- Gaya Umum Body dan HTML --- */
+html, body {
     overflow-x: hidden; /* Mencegah scroll horizontal */
 }
 
@@ -124,7 +40,7 @@ body {
     transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
-/* Light Mode */
+/* --- Mode Terang (Light Mode) --- */
 body.light-mode {
     background-color: var(--light-bg);
     color: var(--light-text);
@@ -159,26 +75,7 @@ body.light-mode .education-item {
     border-color: var(--light-border);
 }
 
-/* Theme Toggle Button (dihapus dari navbar, tapi ini adalah definisi umum) */
-.theme-toggle {
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-}
-
-body.light-mode .theme-toggle {
-    color: var(--light-text);
-    background: none;
-    border: 1px solid var(--light-text);
-}
-body.light-mode .theme-toggle:hover {
-    background-color: var(--light-secondary-bg);
-}
-
-
-/* Dark Mode */
+/* --- Mode Gelap (Dark Mode) --- */
 body.dark-mode {
     background-color: var(--dark-bg);
     color: var(--dark-text);
@@ -191,7 +88,7 @@ body.dark-mode .navbar {
 }
 
 body.dark-mode .navbar.scrolled {
-    background-color: rgba(26, 26, 46, 0.95); /* Slightly darker for scrolled effect */
+    background-color: rgba(26, 26, 46, 0.95); /* Sedikit lebih gelap untuk efek scroll */
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -213,18 +110,67 @@ body.dark-mode .education-item {
     border-color: var(--dark-border);
 }
 
-body.dark-mode .theme-toggle {
-    color: var(--dark-text);
-    background: none;
-    border: 1px solid var(--dark-text);
+/* --- Styling untuk Foto Profil --- */
+.profile-photo {
+    width: 180px; /* Lebar foto */
+    height: 180px; /* Tinggi foto */
+    border-radius: 50%; /* Membuat foto menjadi bulat */
+    object-fit: cover; /* Memastikan gambar mengisi area tanpa terdistorsi */
+    margin-bottom: 30px; /* Jarak antara foto dan teks di bawahnya */
+    border: 4px solid var(--light-accent); /* Border default untuk light mode */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
-body.dark-mode .theme-toggle:hover {
-    background-color: var(--dark-secondary-bg);
+body.dark-mode .profile-photo {
+    border-color: var(--dark-accent); /* Border untuk dark mode */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Efek hover untuk foto profil (opsional) */
+.profile-photo:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
 
-/* Utility Classes */
+/* --- Tombol Beralih Mode Gelap (Dark Mode Toggle) --- */
+/* Tombol ini kini ada di dalam nav-menu dan akan disesuaikan untuk mobile */
+.dark-mode-toggle {
+    background-color: transparent;
+    color: var(--light-accent);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    display: flex; /* Untuk memposisikan ikon di tengah */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: none;
+    z-index: 1000; /* Pastikan di atas elemen lain */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+body.light-mode .dark-mode-toggle {
+    color: var(--light-accent);
+}
+
+body.light-mode .dark-mode-toggle:hover {
+    color: #0056b3;
+    transform: scale(1.1);
+}
+
+body.dark-mode .dark-mode-toggle {
+    color: var(--dark-accent);
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    color: #4fe1bd;
+    transform: scale(1.1);
+}
+
+/* --- Utilitas Umum --- */
 .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -252,7 +198,7 @@ body.dark-mode .theme-toggle:hover {
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background-color: var(--light-accent); /* Default, will be overridden by dark mode */
+    background-color: var(--light-accent); /* Default, akan ditimpa oleh dark mode */
     transition: background-color var(--transition-speed);
 }
 
@@ -260,7 +206,7 @@ body.dark-mode .section-title::after {
     background-color: var(--dark-accent);
 }
 
-/* Button Styling */
+/* --- Styling Tombol Umum (Button Styling) --- */
 .btn {
     display: inline-block;
     padding: 12px 25px;
@@ -276,7 +222,7 @@ body.dark-mode .section-title::after {
     transform: translateY(-3px);
 }
 
-/* Primary Button (default filled button) */
+/* Tombol Primer (Default Filled Button) */
 body.light-mode .btn:not(.btn-secondary):not(.btn-outline-accent) {
     background-color: var(--light-accent);
     color: #fff;
@@ -293,11 +239,10 @@ body.dark-mode .btn:not(.btn-secondary):not(.btn-outline-accent):hover {
     background-color: #4fe1bd;
 }
 
-/* Outline/Ghost Button (for "Selengkapnya") */
+/* Tombol Garis Luar (Outline/Ghost Button - untuk "Selengkapnya") */
 .btn-outline-accent {
     background-color: transparent;
     border: 1px solid;
-    color: var(--light-accent);
 }
 
 body.light-mode .btn-outline-accent {
@@ -320,7 +265,7 @@ body.dark-mode .btn-outline-accent:hover {
     color: var(--dark-accent);
 }
 
-/* Secondary Button (for "Unduh CV") */
+/* Tombol Sekunder (untuk "Unduh CV") */
 .btn-secondary {
     border: 1px solid;
 }
@@ -351,8 +296,7 @@ body.dark-mode .btn-secondary:hover {
     margin-right: 8px;
 }
 
-
-/* Header & Navbar */
+/* --- Header & Navbar --- */
 .header {
     width: 100%;
     position: fixed;
@@ -398,7 +342,6 @@ body.dark-mode .nav-logo {
     margin-left: 30px; /* Pertahankan margin yang sama dengan item lainnya */
 }
 
-
 .nav-link {
     text-decoration: none;
     font-weight: 500;
@@ -428,6 +371,7 @@ body.dark-mode .nav-link::after {
     width: 100%;
 }
 
+/* --- Hamburger Menu Icon --- */
 .hamburger {
     display: none; /* Default to hidden for desktop */
     cursor: pointer;
@@ -461,7 +405,7 @@ body.dark-mode .hamburger .bar {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Hero Section */
+/* --- Bagian Hero (Hero Section) --- */
 .hero-section {
     min-height: 100vh;
     display: flex;
@@ -470,7 +414,7 @@ body.dark-mode .hamburger .bar {
     text-align: center;
     position: relative;
     overflow: hidden;
-    padding-top: var(--navbar-height); /* Offset for fixed navbar */
+    padding-top: var(--navbar-height); /* Offset untuk navbar fixed */
 }
 
 .hero-content {
@@ -499,8 +443,7 @@ body.dark-mode .hamburger .bar {
     justify-content: center; /* Memastikan tombol di tengah */
 }
 
-
-/* About Section */
+/* --- Bagian Tentang Saya (About Section) --- */
 .about-content {
     max-width: 800px;
     margin: 0 auto;
@@ -512,7 +455,7 @@ body.dark-mode .hamburger .bar {
     font-size: 1.1em;
 }
 
-/* Experience (Timeline) Section */
+/* --- Bagian Pengalaman (Experience - Timeline) --- */
 .timeline {
     position: relative;
     max-width: 900px;
@@ -521,9 +464,7 @@ body.dark-mode .hamburger .bar {
 }
 
 /* Sembunyikan Garis Tengah dan Titik untuk membuat semua item di tengah */
-.timeline::before {
-    display: none;
-}
+.timeline::before,
 body.dark-mode .timeline::before {
     display: none;
 }
@@ -546,7 +487,7 @@ body.dark-mode .timeline::before {
 }
 
 .timeline-item::after {
-    display: none;
+    display: none; /* Sembunyikan titik timeline */
 }
 
 body.dark-mode .timeline-item {
@@ -581,7 +522,7 @@ body.dark-mode .timeline-item h3 {
     margin-bottom: 5px;
 }
 
-/* Education Section */
+/* --- Bagian Pendidikan (Education Section) --- */
 .education-list {
     display: flex;
     flex-wrap: wrap;
@@ -594,7 +535,7 @@ body.dark-mode .timeline-item h3 {
     border: 1px solid var(--light-border);
     border-radius: 8px;
     padding: 30px;
-    flex: 1 1 calc(50% - 60px); /* Two items per row, with gap */
+    flex: 1 1 calc(50% - 60px); /* Dua item per baris, dengan jarak */
     max-width: 500px;
     text-align: left;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -627,7 +568,7 @@ body.dark-mode .education-item h3 {
     padding-left: 20px;
 }
 
-/* Contact Section */
+/* --- Bagian Kontak (Contact Section) --- */
 .contact-intro {
     font-size: 1.1em;
     margin-bottom: 30px;
@@ -681,7 +622,7 @@ body.dark-mode .contact-info i {
     font-size: 1.1em;
 }
 
-/* Footer */
+/* --- Footer --- */
 .footer {
     padding: 20px 0;
     text-align: center;
@@ -697,8 +638,7 @@ body.dark-mode .footer {
     border-color: var(--dark-border);
 }
 
-
-/* Animations */
+/* --- Animasi --- */
 @keyframes fadeInFromBottom {
     from {
         opacity: 0;
@@ -761,7 +701,7 @@ body.dark-mode .footer {
     animation: slideInLeft 1s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Initially hidden elements for scroll-based animation */
+/* Elemen yang awalnya tersembunyi untuk animasi berbasis scroll */
 .section-title,
 .about-content p,
 .timeline-item,
@@ -785,116 +725,7 @@ body.dark-mode .footer {
     transform: translateY(0);
 }
 
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .navbar {
-        /* Kembali ke flex row di mobile untuk logo dan hamburger */
-        flex-direction: row;
-        height: var(--navbar-height); /* Kembali ke tinggi navbar standar */
-        padding: 15px 20px;
-        align-items: center; /* Pusatkan secara vertikal */
-    }
-
-    .nav-logo {
-        margin-bottom: 0; /* Hapus margin bawah di logo */
-    }
-
-    .nav-menu {
-        /* Mengembalikan menu ke kondisi tersembunyi */
-        position: fixed;
-        right: -100%; /* Sembunyikan di luar layar */
-        top: var(--navbar-height);
-        flex-direction: column;
-        background-color: var(--light-bg); /* Beri latar belakang untuk overlay */
-        width: 100%;
-        text-align: center;
-        transition: all 0.3s ease-in-out; /* Aktifkan kembali transisi */
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Beri bayangan */
-        padding: 20px 0;
-        align-items: center; /* Memusatkan item menu saat mobile */
-    }
-
-    body.dark-mode .nav-menu {
-        background-color: var(--dark-bg);
-    }
-
-    .nav-menu.active {
-        right: 0; /* Tampilkan saat aktif */
-    }
-
-    .nav-item {
-        margin: 20px 0; /* Memberikan jarak vertikal antar item */
-        width: auto; /* Biarkan lebar item menyesuaikan konten */
-    }
-
-    /* Hapus tema toggle dari navbar di mobile juga */
-    .nav-menu .nav-item:last-child {
-        margin-left: 0; /* Hapus margin kiri bawaan */
-        margin-top: 0; /* Hapus margin atas jika ini adalah tombol floating */
-        display: none; /* Sembunyikan tombol tema di navbar untuk mobile */
-    }
-
-
-    .nav-link {
-        display: inline-block; /* Kembali ke inline-block */
-    }
-
-    .hamburger {
-        display: flex; /* Tampilkan kembali hamburger menu */
-    }
-
-    .hero-content h1 {
-        font-size: 2.5em;
-    }
-
-    .hero-content p {
-        font-size: 1.2em;
-    }
-
-    .section-title {
-        font-size: 2em;
-    }
-
-    .timeline-item {
-        padding: 20px;
-        margin-left: auto;
-        margin-right: auto;
-        width: 90%;
-        text-align: center;
-        transform: none !important;
-    }
-
-    .education-item {
-        flex: 1 1 100%;
-        max-width: 100%;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .btn {
-        width: 80%;
-        margin: px auto;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-content h1 {
-        font-size: 2em;
-    }
-
-    .hero-content p {
-        font-size: 1em;
-    }
-}
-
-
-
-/* --- Custom CSS untuk Galeri Foto --- */
+/* --- Galeri Foto --- */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -962,10 +793,9 @@ body.dark-mode .gallery-info h4 {
 body.dark-mode .gallery-info p {
     color: var(--dark-text);
 }
-
-/* Modal untuk tampilan foto penuh */
+/* --- Modal Image Gallery --- */
 .modal {
-    display: none; /* Hidden by default */
+    display: none; /* INI KUNCI UTAMANYA: Sembunyikan secara default */
     position: fixed; /* Stay in place */
     z-index: 1001; /* Sit on top */
     left: 0;
@@ -974,31 +804,33 @@ body.dark-mode .gallery-info p {
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-    align-items: center; /* Untuk memposisikan gambar di tengah */
-    justify-content: center; /* Untuk memposisikan gambar di tengah */
-}
 
+    /* Flexbox untuk menumpuk gambar dan caption secara vertikal dan memusatkannya */
+    flex-direction: column; /* Membuat item menyusun ke bawah */
+    align-items: center; /* Memusatkan gambar dan keterangan secara horizontal */
+    justify-content: center; /* Memusatkan gambar dan keterangan secara vertikal */
+}
 .modal-content {
-    margin: auto;
-    display: block;
+    margin-bottom: 20px; /* Jarak antara gambar dan keterangan */
+    display: block; /* Pastikan ini tetap block untuk mengambil ruangnya sendiri */
     max-width: 90%;
     max-height: 85%;
-    object-fit: contain; /* Ensure the image fits within the modal */
+    object-fit: contain; /* Memastikan gambar sesuai di dalam modal */
 }
 
 .modal-caption {
-    margin: auto;
+    margin: 0 auto; /* Tengah-kan secara horizontal. Hapus margin-top jika ingin lebih rapat */
     display: block;
     width: 80%;
     max-width: 700px;
     text-align: center;
     color: #ccc;
     padding: 10px 0;
-    height: 150px; /* Cukup ruang untuk teks */
+    /* height: 150px; */ /* Pertimbangkan untuk menghapus ini jika teks bervariasi */
     font-size: 1.2em;
 }
 
-/* Close button */
+/* Tombol Tutup (Close button) */
 .close {
     position: absolute;
     top: 25px;
@@ -1017,51 +849,202 @@ body.dark-mode .gallery-info p {
     cursor: pointer;
 }
 
-/* Tambahkan ke bagian @media (max-width: 768px) */
+/* --- Wrapper Tombol Kustom (Top-Right Button Wrapper) --- */
+.button-wrapper {
+    position: relative; /* Penting! Menjadi acuan untuk posisi absolut tombol di dalamnya */
+    width: 100%; /* Pastikan kontainer meluas selebar halaman */
+    height: 0; /* Agar kontainer ini tidak menambah ruang vertikal pada layout */
+}
+
+/* --- Gaya Tombol Kanan Atas (Top-Right Button) --- */
+.top-right-button {
+    position: absolute; /* Tombol akan diposisikan relatif terhadap .button-wrapper */
+    top: 10px; /* Jarak dari atas (atur sesuai kebutuhan Anda) */
+    right: 20px; /* Jarak dari kanan (atur sesuai kebutuhan Anda) */
+    padding: 10px 15px;
+    background-color: #007bff; /* Contoh warna latar belakang */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 999; /* Pastikan tombol muncul di atas elemen lain jika ada tumpang tindih */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* Mencegah teks tombol patah baris */
+}
+
+.top-right-button:hover {
+    background-color: #0056b3; /* Warna lebih gelap saat di-hover */
+}
+
+
+/* --- Desain Responsif (Media Queries) --- */
 @media (max-width: 768px) {
-    /* Responsive untuk galeri */
+    /* Ukuran foto profil di perangkat mobile */
+    .profile-photo {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 20px;
+    }
+
+    .navbar {
+        /* Kembali ke flex row di mobile untuk logo dan hamburger */
+        flex-direction: row;
+        height: var(--navbar-height); /* Kembali ke tinggi navbar standar */
+        padding: 15px 20px;
+        align-items: center; /* Pusatkan secara vertikal */
+    }
+
+    .nav-logo {
+        margin-bottom: 0; /* Hapus margin bawah di logo */
+    }
+
+    .nav-menu {
+        /* Mengembalikan menu ke kondisi tersembunyi */
+        position: fixed;
+        right: -100%; /* Sembunyikan di luar layar */
+        top: var(--navbar-height);
+        flex-direction: column;
+        background-color: var(--light-bg); /* Beri latar belakang untuk overlay */
+        width: 100%;
+        text-align: center;
+        transition: all 0.3s ease-in-out; /* Aktifkan kembali transisi */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Beri bayangan */
+        padding: 20px 0;
+        align-items: center; /* Memusatkan item menu saat mobile */
+        height: calc(100vh - var(--navbar-height)); /* Sesuaikan tinggi menu */
+        overflow-y: auto; /* Aktifkan scroll jika konten menu melebihi tinggi layar */
+    }
+
+    body.dark-mode .nav-menu {
+        background-color: var(--dark-bg);
+    }
+
+    .nav-menu.active {
+        right: 0; /* Tampilkan saat aktif */
+    }
+
+    .nav-item {
+        margin: 15px 0; /* Memberikan jarak vertikal antar item */
+        width: 100%; /* Ambil lebar penuh di menu hamburger */
+        text-align: center;
+    }
+
+    /* Pastikan tombol dark mode juga punya gaya di menu hamburger */
+    .nav-item .nav-link,
+    .nav-item .dark-mode-toggle {
+        display: block; /* Agar mengambil lebar penuh dan bisa di-center */
+        width: fit-content; /* Untuk menyusut ke konten */
+        margin: 0 auto; /* Tengah-kan tombol di menu hamburger */
+        padding: 10px 20px; /* Sesuaikan padding */
+        color: var(--light-text); /* Warna teks di menu hamburger (default light) */
+        text-decoration: none;
+        font-size: 1.1rem;
+    }
+    body.dark-mode .nav-item .nav-link,
+    body.dark-mode .nav-item .dark-mode-toggle {
+        color: var(--dark-text); /* Warna teks di menu hamburger (dark mode) */
+    }
+
+
+    .nav-item .dark-mode-toggle {
+        background-color: transparent;
+        border: 1px solid currentColor; /* Border agar lebih terlihat di menu */
+        border-radius: 25px;
+        font-size: 20px;
+        width: auto;
+        height: auto;
+    }
+
+    /* Sembunyikan tombol dark mode dari tampilan navbar desktop di mobile jika ada */
+    /* Ini mengasumsikan tombol dark mode hanya muncul di dalam hamburger di mobile */
+    .nav-menu .nav-item:last-child {
+        margin-left: 0;
+        margin-top: 0;
+        /* display: none; */ /* Jangan sembunyikan jika ingin muncul di hamburger menu */
+    }
+
+
+    .nav-link {
+        display: inline-block; /* Kembali ke inline-block */
+    }
+
+    .hamburger {
+        display: flex; /* Tampilkan hamburger menu */
+        position: relative; /* Agar z-index bekerja dengan baik */
+        z-index: 1001; /* Di atas menu nav */
+    }
+
+    /* Ukuran hero section dan judul */
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-content p {
+        font-size: 1.2em;
+    }
+
+    .section-title {
+        font-size: 2em;
+    }
+
+    /* Timeline dan Edukasi responsif */
+    .timeline-item {
+        padding: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+        text-align: center;
+        transform: none !important; /* Pastikan animasi tidak mengganggu responsif */
+    }
+
+    .education-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    /* Tombol hero section responsif */
+    .hero-buttons {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .btn {
+        width: 80%;
+        margin: 5px auto; /* Margin atas/bawah 5px, auto kiri/kanan untuk tengah */
+    }
+
+    /* Galeri responsif */
     .gallery-grid {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
+
+    /* Posisi Hamburger Menu di mobile */
+    .hamburger-menu { /* Ini jika Anda punya elemen terpisah untuk ikon hamburger */
+        display: block;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1001;
+        cursor: pointer;
+    }
 }
 
-
-/* Untuk tombol dark mode di navbar utama */
-.navbar .nav-menu .theme-toggle {
-    /* Aturan default: terlihat di desktop, disembunyikan di mobile saat hamburger terbuka */
-    display: flex; /* Atau block, inline-block, tergantung tata letak Anda */
-    align-items: center;
-    justify-content: center;
-    /* Tambahan CSS untuk menyembunyikan tombol ini saat hamburger aktif */
-}
-
-/* Saat hamburger aktif (menu mobile terbuka), sembunyikan tombol dark mode utama */
-.hamburger.active + .nav-menu .nav-item .theme-toggle#theme-toggle {
-    display: none;
-}
-
-/* Untuk tombol dark mode di dalam menu hamburger (yang dibuat JS) */
-.nav-menu #hamburger-theme-toggle {
-    display: none; /* Sembunyikan secara default */
-}
-
-/* Saat hamburger aktif (menu mobile terbuka), tampilkan tombol dark mode di dalam menu */
-.hamburger.active + .nav-menu #hamburger-theme-toggle {
-    display: flex; /* Atau block, inline-block */
-    /* Tambahan styling untuk tombol di dalam menu jika diperlukan */
-    width: 100%; /* Agar memenuhi lebar menu */
-    text-align: left;
-    padding-left: 20px; /* Sesuaikan dengan padding nav-item lainnya */
-    box-sizing: border-box;
-}
-
-/* Sesuaikan media query Anda untuk mobile jika ada */
-@media (max-width: 768px) { /* Contoh breakpoint mobile */
-    .navbar .nav-menu .theme-toggle {
-        display: none; /* Sembunyikan tombol utama di mobile secara default */
+@media (max-width: 480px) {
+    /* Ukuran foto profil di perangkat mobile lebih kecil */
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 15px;
     }
 
-    .hamburger.active + .nav-menu #hamburger-theme-toggle {
-        display: flex; /* Tampilkan tombol hamburger di mobile saat aktif */
+    /* Ukuran hero section dan judul lebih kecil */
+    .hero-content h1 {
+        font-size: 2em;
+    }
+
+    .hero-content p {
+        font-size: 1em;
     }
 }
