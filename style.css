@@ -1026,3 +1026,42 @@ body.dark-mode .gallery-info p {
 }
 
 
+/* Untuk tombol dark mode di navbar utama */
+.navbar .nav-menu .theme-toggle {
+    /* Aturan default: terlihat di desktop, disembunyikan di mobile saat hamburger terbuka */
+    display: flex; /* Atau block, inline-block, tergantung tata letak Anda */
+    align-items: center;
+    justify-content: center;
+    /* Tambahan CSS untuk menyembunyikan tombol ini saat hamburger aktif */
+}
+
+/* Saat hamburger aktif (menu mobile terbuka), sembunyikan tombol dark mode utama */
+.hamburger.active + .nav-menu .nav-item .theme-toggle#theme-toggle {
+    display: none;
+}
+
+/* Untuk tombol dark mode di dalam menu hamburger (yang dibuat JS) */
+.nav-menu #hamburger-theme-toggle {
+    display: none; /* Sembunyikan secara default */
+}
+
+/* Saat hamburger aktif (menu mobile terbuka), tampilkan tombol dark mode di dalam menu */
+.hamburger.active + .nav-menu #hamburger-theme-toggle {
+    display: flex; /* Atau block, inline-block */
+    /* Tambahan styling untuk tombol di dalam menu jika diperlukan */
+    width: 100%; /* Agar memenuhi lebar menu */
+    text-align: left;
+    padding-left: 20px; /* Sesuaikan dengan padding nav-item lainnya */
+    box-sizing: border-box;
+}
+
+/* Sesuaikan media query Anda untuk mobile jika ada */
+@media (max-width: 768px) { /* Contoh breakpoint mobile */
+    .navbar .nav-menu .theme-toggle {
+        display: none; /* Sembunyikan tombol utama di mobile secara default */
+    }
+
+    .hamburger.active + .nav-menu #hamburger-theme-toggle {
+        display: flex; /* Tampilkan tombol hamburger di mobile saat aktif */
+    }
+}
